@@ -1,0 +1,44 @@
+.table {
+  margin-top: 1rem;
+}
+
+.btn-warning {
+  color: white;
+}
+
+.card {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.text-danger {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.editing {
+  background-color: #f8f9fa;
+}
+
+.edit-mode-indicator {
+  color: #007bff;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.btn-cancel {
+  margin-left: 8px;
+}
+
+
+.usuario-online {
+  background-color: rgba(40, 167, 69, 0.1) !important;  /* Verde claro semi-transparente */
+}
+
+.usuario-online td {
+  color: #28a745 !important;  /* Verde mais escuro para o texto */
+}

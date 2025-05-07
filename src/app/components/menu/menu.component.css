@@ -1,0 +1,88 @@
+.mat-toolbar {
+  
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.brand {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.nav-button {
+  margin: 0 4px;
+}
+
+.username-display {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  font-size: 14px;
+}
+
+.username-display mat-icon {
+  margin-right: 5px;
+}
+
+.button-text {
+  margin-left: 4px;
+}
+
+.logout-button {
+  margin-left: 8px;
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 64, 129, 0.1);
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+  .button-text {
+    display: none;
+  }
+  
+  .nav-button {
+    min-width: 40px;
+    padding: 0 8px;
+  }
+  
+  .brand {
+    font-size: 1rem;
+  }
+}
+
+:host {
+  display: block;
+  height: 64px;
+}
+
+/* Estilo global para ajustar o conteúdo principal */
+::ng-deep .main-content {
+  padding-top: 80px; /* 64px (altura do menu) + 16px de espaço extra */
+}
+
+.username-display {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  font-size: 14px;
+  color: chartreuse;
+}
+
+.username-display mat-icon {
+  margin-right: 5px;
+}
