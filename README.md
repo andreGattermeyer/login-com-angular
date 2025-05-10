@@ -1,5 +1,5 @@
 # 🚀 User Registration App
-Um sistema de cadastro de usuários feito em Angular, com autenticação JWT e um design responsivo.
+Um sistema de cadastro de usuários feito em Angular, com autenticação JWT e banco de dados Postgres.
 
 ## 🔧 Como instalar
 ```sh
