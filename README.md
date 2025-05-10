@@ -1,3 +1,10 @@
+# 🚀 User Registration App
+Um sistema de cadastro de usuários feito em Angular, com autenticação JWT e um design responsivo.
+
+## 🔧 Como instalar
+```sh
+git clone https://github.com/seuusuario/seurepo.git
+
 # UserRegistration
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.10.
