@@ -1,5 +1,5 @@
 .mat-toolbar {
-  
+
   top: 0;
   left: 0;
   right: 0;
@@ -54,12 +54,12 @@
   .button-text {
     display: none;
   }
-  
+
   .nav-button {
     min-width: 40px;
     padding: 0 8px;
   }
-  
+
   .brand {
     font-size: 1rem;
   }

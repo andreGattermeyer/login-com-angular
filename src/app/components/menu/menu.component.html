@@ -8,7 +8,7 @@
       {{ username }}
     </span>
 
-    <ng-container *ngIf="userRole === 'ROLE_ADMIN'">
+    <ng-container *ngIf="userRole === 'ADMIN'">
       <button mat-button routerLink="/admin" routerLinkActive="active" class="nav-button">
         <mat-icon>dashboard</mat-icon>
         <span class="button-text">Dashboard</span>
@@ -17,9 +17,13 @@
         <mat-icon>people</mat-icon>
         <span class="button-text">Usuários</span>
       </button>
+      <button mat-button routerLink="/veiculos" routerLinkActive="active" class="nav-button">
+        <mat-icon>directions_car</mat-icon>
+        <span class="button-text">Veículos</span>
+      </button>
     </ng-container>
 
-    <ng-container *ngIf="userRole === 'ROLE_USER'">
+    <ng-container *ngIf="userRole === 'USER'">
       <button mat-button routerLink="/user" routerLinkActive="active" class="nav-button">
         <mat-icon>person</mat-icon>
         <span class="button-text">Minha Área</span>

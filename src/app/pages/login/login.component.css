@@ -1,51 +1,48 @@
 .login-container {
+  height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f8f9fa;
-  padding: 20px;
+  justify-content: center;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;  /* Previne rolagem */
 }
 
-.login-box {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+.login-card {
   width: 100%;
   max-width: 400px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  margin: 0;  /* Remove margens que podem causar rolagem */
 }
 
-.login-form {
-  margin-top: 1rem;
+.login-title {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #333;
 }
 
-.form-group label {
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.input-group-text {
-  background-color: #f8f9fa;
-  border-right: none;
-}
-
-.form-control {
-  border-left: none;
-}
-
-.form-control:focus {
-  border-color: #ced4da;
-  box-shadow: none;
-}
-
-.input-group:focus-within {
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+.form-group {
+  margin-bottom: 16px;
 }
 
 .btn-primary {
-  padding: 0.6rem;
-  font-weight: 500;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.error-message {
+  color: #dc3545;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.loading-spinner {
+  margin: 0 auto;
+  display: block;
 }
 
 .invalid-feedback {
@@ -53,7 +50,7 @@
 }
 
 .bi {
-  color: #fff;
+  color: #000;
 }
 h2 {
   color: #333;

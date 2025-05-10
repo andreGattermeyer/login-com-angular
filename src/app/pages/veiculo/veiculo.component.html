@@ -1,0 +1,136 @@
+<div class="container">
+  <!-- Mensagem de feedback -->
+  <div *ngIf="mensagem" [class]="'alert alert-' + (tipoMensagem === 'success' ? 'success' : 'danger')">
+    {{ mensagem }}
+  </div>
+
+  <!-- Lista de Veículos -->
+  <div class="card" *ngIf="!mostrarFormulario">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Veículos Cadastrados</h3>
+        <button class="btn btn-primary btn-novo" (click)="abrirFormularioCadastro()">
+          <i class="fas fa-plus"></i> Novo Veículo
+        </button>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            
+            <th>Modelo</th>
+            <th>Fabricante</th>
+            <th>Placa</th>
+            <th>Tipo</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let veiculo of veiculos">
+            <td>{{veiculo.modelo}}</td>
+            <td>{{veiculo.fabricante}}</td>
+            <td>{{veiculo.placa}}</td>
+            <td>{{veiculo.tipoVeiculo}}</td>
+            <td>{{veiculo.status}}</td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="editarVeiculo(veiculo); mostrarFormulario = true">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deletarVeiculo(veiculo.id)">
+                Excluir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Overlay e Card de Cadastro/Edição -->
+  <div class="modal-overlay" *ngIf="mostrarFormulario"></div>
+  <div class="cadastro-card" *ngIf="mostrarFormulario">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>{{ editando ? 'Editar Veículo' : 'Novo Veículo' }}</h3>
+        <button class="btn btn-outline-secondary" (click)="cancelarEdicao()">
+          <i class="fas fa-times"></i> Voltar
+        </button>
+      </div>
+
+      <form [formGroup]="veiculoForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-column">
+            <div class="mb-3">
+              <label for="modelo" class="form-label">Modelo</label>
+              <input type="text" class="form-control" id="modelo" formControlName="modelo">
+              <div class="text-danger" *ngIf="veiculoForm.get('modelo')?.errors?.['required'] && veiculoForm.get('modelo')?.touched">
+                Modelo é obrigatório
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="fabricante" class="form-label">Fabricante</label>
+              <input type="text" class="form-control" id="fabricante" formControlName="fabricante">
+              <div class="text-danger" *ngIf="veiculoForm.get('fabricante')?.errors?.['required'] && veiculoForm.get('fabricante')?.touched">
+                Fabricante é obrigatório
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="cor" class="form-label">Cor</label>
+              <input type="text" class="form-control" id="cor" formControlName="cor">
+              <div class="text-danger" *ngIf="veiculoForm.get('cor')?.errors?.['required'] && veiculoForm.get('cor')?.touched">
+                Cor é obrigatória
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="chassi" class="form-label">Chassi</label>
+              <input type="text" class="form-control" id="chassi" formControlName="chassi">
+              <div class="text-danger" *ngIf="veiculoForm.get('chassi')?.errors && veiculoForm.get('chassi')?.touched">
+                <span *ngIf="veiculoForm.get('chassi')?.errors?.['required']">Chassi é obrigatório</span>
+                <span *ngIf="veiculoForm.get('chassi')?.errors?.['pattern']">Chassi deve ter 17 caracteres (letras maiúsculas e números)</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-column">
+            <div class="mb-3">
+              <label for="placa" class="form-label">Placa</label>
+              <input type="text" class="form-control" id="placa" formControlName="placa">
+              <div class="text-danger" *ngIf="veiculoForm.get('placa')?.errors && veiculoForm.get('placa')?.touched">
+                <span *ngIf="veiculoForm.get('placa')?.errors?.['required']">Placa é obrigatória</span>
+                <span *ngIf="veiculoForm.get('placa')?.errors?.['pattern']">Formato inválido (ex: ABC1D23)</span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="frota" class="form-label">Frota</label>
+              <input type="text" class="form-control" id="frota" formControlName="frota">
+              <div class="text-danger" *ngIf="veiculoForm.get('frota')?.errors?.['required'] && veiculoForm.get('frota')?.touched">
+                Frota é obrigatória
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="tipoVeiculo" class="form-label">Tipo de Veículo</label>
+              <select class="form-select" id="tipoVeiculo" formControlName="tipoVeiculo">
+                <option *ngFor="let tipo of tiposVeiculo" [value]="tipo">{{tipo}}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="status" class="form-label">Status</label>
+              <select class="form-select" id="status" formControlName="status">
+                <option *ngFor="let status of statusVeiculo" [value]="status">{{status}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center gap-2 mt-4">
+          <button type="submit" class="btn btn-primary" [disabled]="!veiculoForm.valid">
+            {{ editando ? 'Atualizar' : 'Cadastrar' }}
+          </button>
+        </div>
+        <!-- Debug info - Agora só aparece se o formulário foi tocado -->
+        <div class="text-danger mt-3" *ngIf="!veiculoForm.valid && veiculoForm.touched">
+          Formulário inválido. Por favor, preencha todos os campos corretamente.
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

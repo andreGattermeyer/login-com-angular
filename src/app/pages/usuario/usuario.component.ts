@@ -12,6 +12,7 @@ import { Usuario } from '../../models/usuario.model';
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent implements OnInit {
+  mostrarFormulario = false;
   usuarioForm: FormGroup;
   usuarios: Usuario[] = [];
   editando = false;
@@ -27,7 +28,7 @@ export class UsuarioComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      role: ['ROLE_USER', Validators.required]  // Valor padrão como ROLE_USER
+      role: ['USER', Validators.required]  // Valor padrão como ROLE_USER
     });
   }
 
@@ -41,10 +42,10 @@ export class UsuarioComponent implements OnInit {
 
   carregarUsuarios() {
     this.usuarioService.listarUsuarios().subscribe({
-      next: (usuarios) => {
+      next: (usuarios: Usuario[]) => {
         this.usuarios = usuarios;
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Erro ao carregar usuários:', error);
       }
     });
@@ -121,13 +122,29 @@ deletarUsuario(id: number | undefined) {
 
   cancelarEdicao() {
     this.resetarFormulario();
+    this.mostrarFormulario = false;
   }
 
   private resetarFormulario() {
-    this.editando = false;
-    this.usuarioId = null;
-    this.usuarioForm.reset();
+    this.limparFormulario();
     this.usuarioForm.get('password')?.setValidators(Validators.required);
     this.usuarioForm.get('password')?.updateValueAndValidity();
+    this.mostrarFormulario = false;
+  }
+
+  abrirFormularioCadastro() {
+    this.editando = false;
+    this.limparFormulario();
+    this.mostrarFormulario = true;
+    this.usuarioForm.get('password')?.setValidators(Validators.required);
+    this.usuarioForm.get('password')?.updateValueAndValidity();
+  }
+
+  limparFormulario() {
+    this.usuarioForm.reset({
+      role: 'USER' // Mantém o valor padrão do role
+    });
+    this.editando = false;
+    this.usuarioId = null;
   }
 }

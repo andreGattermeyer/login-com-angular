@@ -32,17 +32,16 @@ export class LoginComponent {
       this.loading = true;
       this.authService.login(this.loginForm.value).subscribe({
         next: (response: any) => {
-          console.log('Resposta completa do login:', response); // Para debug
-          const userRole = response.role || 'ROLE_ADMIN';
-          console.log('Role definida:', userRole); // Para debug
+          const userRole = response.role;
           
+          // Não precisamos definir o token aqui, pois já é feito no AuthService
           localStorage.setItem('isAuthenticated', 'true');
           localStorage.setItem('role', userRole);
           this.authService.setUsername(this.loginForm.get('username')?.value);
-          
-          if (userRole === 'ROLE_ADMIN') {
+
+          if (userRole === 'ADMIN') {
             this.router.navigate(['/admin']);
-          } else if (userRole === 'ROLE_USER') {
+          } else if (userRole === 'USER') {
             this.router.navigate(['/user']);
           }
           this.loading = false;

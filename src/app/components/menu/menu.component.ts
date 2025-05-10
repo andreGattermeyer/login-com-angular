@@ -21,6 +21,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+[x: string]: any;
   userRole: string | null = null;
   username: string | null = null;
 

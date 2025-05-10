@@ -1,5 +1,54 @@
-body {
-  padding-top: 64px; /* Altura do toolbar do Material */
+html, body {
+  height: 100%;
   margin: 0;
+}
+
+body {
+  overflow-y: auto;
+  padding-top: 56px; /* Altura de apenas uma navbar */
+}
+
+body:not(.logged-in) {
+  padding-top: 0;
+}
+
+.container {
+  padding: 20px;
+}
+
+/* Remove estilos duplicados de navegação */
+nav {
+  z-index: 1000; /* Garante que apenas uma nav fique visível */
+}
+
+/* Ajustes para conteúdo principal */
+.main-content {
+  position: relative;
+  width: 100%;
+}
+
+/* Remove padding extras que podem causar barras duplicadas */
+.content-wrapper {
+  padding-top: 0;
+}
+
+.table-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Remove a rolagem dupla */
+.table-responsive {
+  overflow: visible;
+}
+
+/* Ajuste para tabelas */
+table {
+  width: 100%;
+}
+
+/* Ajuste para formulários */
+.card {
+  margin-bottom: 20px;
 }
 /* You can add global styles to this file, and also import other style files */

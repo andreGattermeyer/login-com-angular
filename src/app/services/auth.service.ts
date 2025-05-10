@@ -1,6 +1,7 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -17,10 +18,21 @@ export class AuthService {
   ) { }
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+    return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
+      tap((response: any) => {
+        if (response.token) {
+          // Armazena o token com o prefixo Bearer
+          localStorage.setItem('token', `Bearer ${response.token}`);
+          localStorage.setItem('isAuthenticated', 'true');
+          localStorage.setItem('role', response.role);
+          localStorage.setItem('username', credentials.username);
+        }
+      })
+    );
   }
 
   logout(): void {
+    localStorage.removeItem('token');
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
@@ -28,11 +40,16 @@ export class AuthService {
   }
 
   setUsername(username: string): void {
-    localStorage.setItem('username', username);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('username', username);
+    }
   }
 
   getUsername(): string | null {
-    return localStorage.getItem('username');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('username');
+    }
+    return null;
   }
 
   isAuthenticated(): boolean {

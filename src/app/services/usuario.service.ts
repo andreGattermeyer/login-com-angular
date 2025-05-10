@@ -13,7 +13,7 @@ export class UsuarioService {
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return new HttpHeaders().set('Authorization', token || '');
   }
 
   listarUsuarios(): Observable<Usuario[]> {

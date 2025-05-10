@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin',
@@ -9,28 +8,29 @@ import { HttpClient } from '@angular/common/http';
   template: `
     <div class="container mt-4">
       <h2>Admin Dashboard</h2>
-      <div class="alert alert-success" *ngIf="message">
-        {{ message }}
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Gerenciamento de Usuários</h5>
+              <p class="card-text">Cadastre e gerencie os usuários do sistema.</p>
+              <a routerLink="/usuarios" class="btn btn-primary">Acessar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Gerenciamento de Veículos</h5>
+              <p class="card-text">Cadastre e gerencie os veículos do sistema.</p>
+              <a routerLink="/veiculos" class="btn btn-primary">Acessar</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   `
 })
 export class AdminComponent {
-  message: string = '';
-
-  constructor(private http: HttpClient) {
-    this.loadAdminData();
-  }
-
-  private loadAdminData() {
-    this.http.get<string>('http://localhost:8080/admin')
-      .subscribe({
-        next: (response) => {
-          this.message = response;
-        },
-        error: (error) => {
-          console.error('Error accessing admin page:', error);
-        }
-      });
-  }
+  constructor() {}
 }

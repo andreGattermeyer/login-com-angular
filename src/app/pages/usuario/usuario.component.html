@@ -1,103 +1,86 @@
-<div class="container mt-4">
-  <h2>Gerenciamento de Usuários</h2>
-  
+<div class="container">
   <!-- Mensagem de feedback -->
-  <div *ngIf="mensagem" class="alert" [ngClass]="{'alert-success': tipoMensagem === 'success', 'alert-danger': tipoMensagem === 'error'}" role="alert">
+  <div *ngIf="mensagem" [class]="'alert alert-' + (tipoMensagem === 'success' ? 'success' : 'danger')">
     {{ mensagem }}
   </div>
-  
-  <!-- Formulário de Cadastro -->
-  <div class="card mb-4">
+
+  <!-- Lista de Usuários -->
+  <div class="card" *ngIf="!mostrarFormulario">
     <div class="card-body">
-      <h5 class="card-title">{{ editando ? 'Editar Usuário' : 'Cadastrar Usuário' }}</h5>
-      
-      <div *ngIf="editando" class="edit-mode-indicator">
-        <i class="fas fa-info-circle"></i> Você está editando o usuário: {{ usuarioForm.get('username')?.value }}
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Usuários Cadastrados</h3>
+        <button class="btn btn-primary btn-novo" (click)="abrirFormularioCadastro()">
+          <i class="fas fa-plus"></i> Novo Usuário
+        </button>
       </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Usuário</th>
+            <th>Email</th>
+            <th>Perfil</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios">
+            <td>{{ usuario.id }}</td>
+            <td>{{ usuario.username }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.role }}</td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="editarUsuario(usuario)">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deletarUsuario(usuario.id)">
+                Excluir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Overlay e Card de Cadastro/Edição -->
+  <div class="modal-overlay" *ngIf="mostrarFormulario"></div>
+  <div class="cadastro-card" *ngIf="mostrarFormulario">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>{{ editando ? 'Editar Usuário' : 'Novo Usuário' }}</h3>
+        <button class="btn btn-outline-secondary" (click)="cancelarEdicao()">
+          <i class="fas fa-times"></i> Voltar
+        </button>
+      </div>
+
       <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="username" class="form-label">Nome de Usuário</label>
           <input type="text" class="form-control" id="username" formControlName="username">
-          <div class="text-danger" *ngIf="usuarioForm.get('username')?.errors?.['required'] && usuarioForm.get('username')?.touched">
-            Nome de usuário é obrigatório
-          </div>
         </div>
-        
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input type="email" class="form-control" id="email" formControlName="email">
-          <div class="text-danger" *ngIf="usuarioForm.get('email')?.errors?.['required'] && usuarioForm.get('email')?.touched">
-            Email é obrigatório
-          </div>
-          <div class="text-danger" *ngIf="usuarioForm.get('email')?.errors?.['email'] && usuarioForm.get('email')?.touched">
-            Email inválido
-          </div>
         </div>
-        
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="!editando">
           <label for="password" class="form-label">Senha</label>
           <input type="password" class="form-control" id="password" formControlName="password">
-          <div class="text-danger" *ngIf="usuarioForm.get('password')?.errors?.['required'] && usuarioForm.get('password')?.touched">
-            Senha é obrigatória
-          </div>
         </div>
-        
         <div class="mb-3">
           <label for="role" class="form-label">Perfil</label>
-          <select class="form-control" id="role" formControlName="role">
-            <option value="ROLE_USER">Usuário</option>
-            <option value="ROLE_ADMIN">Administrador</option>
+          <select class="form-select" id="role" formControlName="role">
+            <option value="USER">Usuário</option>
+            <option value="ADMIN">Administrador</option>
           </select>
-          <div class="text-danger" *ngIf="usuarioForm.get('role')?.errors?.['required'] && usuarioForm.get('role')?.touched">
-            Perfil é obrigatório
-          </div>
         </div>
-        
-        <div class="form-group">
+        <div class="d-flex justify-content-center gap-2 mt-4">
           <button type="submit" class="btn btn-primary" [disabled]="!usuarioForm.valid">
             {{ editando ? 'Atualizar' : 'Cadastrar' }}
           </button>
-          <button *ngIf="editando" type="button" class="btn btn-secondary btn-cancel" (click)="cancelarEdicao()">
-            Cancelar
-          </button>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- Lista de Usuários -->
-  <div class="card">
-    <div class="card-body">
-      <h3 class="card-title">Usuários Cadastrados</h3>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Usuário</th>
-              <th>Email</th>
-              <th>Perfil</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let usuario of usuarios" [ngClass]="{'usuario-online': usuario.online}">
-              <td>{{usuario.id}}</td>
-              <td>{{usuario.username}}</td>
-              <td>{{usuario.email}}</td>
-              <td>{{usuario.role === 'ROLE_ADMIN' ? 'Administrador' : 'Usuário'}}</td>
-              <td>
-                <button class="btn btn-sm btn-warning me-2" (click)="editarUsuario(usuario)">
-                  <i class="bi bi-pencil"></i> Editar
-                </button>
-                <button class="btn btn-sm btn-danger" (click)="deletarUsuario(usuario.id)">
-                  <i class="bi bi-trash"></i> Excluir
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
   </div>
 </div>
