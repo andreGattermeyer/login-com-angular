@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { UserComponent } from './pages/user/user.component';
@@ -7,38 +8,38 @@ import { VeiculoComponent } from './pages/veiculo/veiculo.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 
-export const routes: Routes = [
+const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['ADMIN'] }
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin/dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['ADMIN'] }
+    canActivate: [AuthGuard]
   },
   {
     path: 'user',
     component: UserComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['USER'] }
+    canActivate: [AuthGuard]
   },
   {
     path: 'usuarios',
     component: UsuarioComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['ADMIN'] }
+    canActivate: [AuthGuard]
   },
   {
     path: 'veiculos',
     component: VeiculoComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['ADMIN'] }
-  },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+    canActivate: [AuthGuard]
+  }
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
