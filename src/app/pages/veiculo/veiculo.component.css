@@ -60,9 +60,11 @@
   overflow: auto;
 }
 
+/* Estilização da tabela */
 .table {
-  margin-bottom: 0;
   width: 100%;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
 }
 
 .table thead th {
@@ -70,10 +72,32 @@
   border-bottom: 2px solid #dee2e6;
   color: #495057;
   font-weight: 600;
-  padding: 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.table tbody td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  font-size: 0.9rem;
+}
+
+/* Estilização dos botões da tabela */
+.table .btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.table .btn-warning {
+  background-color: #f6ad55;
+  border: none;
+  color: white;
+}
+
+.table .btn-danger {
+  background-color: #f56565;
+  border: none;
 }
 
 .table tbody tr {
