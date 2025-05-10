@@ -31,7 +31,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loading = true;
       this.authService.login(this.loginForm.value).subscribe({
-        next: (response: any) => {
+        next: (response: any) => { 
           const userRole = response.role;
           
           // Não precisamos definir o token aqui, pois já é feito no AuthService
